@@ -1,7 +1,6 @@
 from flask import render_template, url_for, request
-from statsapp import app, db
+from statsapp import app
 from statsapp.forms import DataForm, ArgForm
-from statsapp.models import Data
 from statsapp.funcs import *
 
 choices = { 'Go Home': 'home',
@@ -61,7 +60,7 @@ def median():
 	form = DataForm()
 
 	if form.validate_on_submit():
-		result = get_median(parse_form('/median'))[1]
+		result = get_median(parse_form('/median'))
 		return render_template('median.html', 
 								choices=choices, 
 								form=form, 
@@ -171,9 +170,6 @@ def popsd():
 							form=form, 
 							operation='Population Standard Deviation')
 
-
-# def parse_form(page):
-# 	return [float(i) for i in request.form['body'].split(',')]
 
 @app.route('/zscore', methods=['GET', 'POST'])
 def zscore():
